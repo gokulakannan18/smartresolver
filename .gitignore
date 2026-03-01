@@ -1,0 +1,20 @@
+# Dependency directories
+**/node_modules/
+node_modules/
+
+# Files to ignore
+.env
+.env.local
+.env.*.local
+*.log
+npm-debug.log*
+
+# Build and IDE files
+client/dist/
+.DS_Store
+.vscode/
+
+# Project specifically
+server/uploads/
+*.mjs
+build_log.txt
