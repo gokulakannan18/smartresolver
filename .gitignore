@@ -1,6 +1,7 @@
 # Dependency directories
 **/node_modules/
 node_modules/
+dist/
 
 # Files to ignore
 .env
