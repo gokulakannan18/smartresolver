@@ -59,7 +59,7 @@ const StaffDashboard = () => {
         <div style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
             <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
                 <div>
-                    <h1>Welcome, {user?.name} 👋</h1>
+                    <h1>Welcome, {user?.name}</h1>
                     <p style={{ color: 'var(--text-muted)' }}>Work efficiently on assigned maintenance tasks</p>
                 </div>
                 <button onClick={logout} className="btn" style={{ background: '#eee' }}>Logout</button>
