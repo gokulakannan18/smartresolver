@@ -52,6 +52,9 @@ const complaintSchema = new mongoose.Schema({
     resolvedAt: {
         type: Date
     },
+    completedAt: {
+        type: Date
+    },
     resolutionTime: {
         type: Number // in hours
     },

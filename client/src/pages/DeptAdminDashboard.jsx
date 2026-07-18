@@ -111,6 +111,7 @@ const DeptAdminDashboard = () => {
                                 <th style={{ padding: '1rem 1.5rem' }}>Status</th>
                                 <th style={{ padding: '1rem 1.5rem' }}>Priority</th>
                                 <th style={{ padding: '1rem 1.5rem' }}>Staff Assigned</th>
+                                <th style={{ padding: '1rem 1.5rem' }}>Completed At</th>
                                 <th style={{ padding: '1rem 1.5rem' }}>Actions</th>
                             </tr>
                         </thead>
@@ -143,6 +144,12 @@ const DeptAdminDashboard = () => {
                                         ) : (
                                             <span style={{ color: 'var(--text-muted)', fontStyle: 'italic' }}>Unassigned</span>
                                         )}
+                                    </td>
+                                    <td style={{ padding: '1rem 1.5rem', fontSize: '0.8rem', color: t.completedAt ? 'var(--success)' : 'var(--text-muted)', whiteSpace: 'nowrap' }}>
+                                        {t.completedAt
+                                            ? new Date(t.completedAt).toLocaleString()
+                                            : <span style={{ fontStyle: 'italic' }}>—</span>
+                                        }
                                     </td>
                                     <td style={{ padding: '1rem 1.5rem' }}>
                                         {(t.status === 'Open' || !t.staffMember) && (

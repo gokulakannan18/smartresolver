@@ -78,14 +78,50 @@ const errorHandler = require('./middlewares/error');
 app.use(errorHandler);
 
 // Port & Listen
-const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
-    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+const startServer = () => {
+    const PORT = Number(process.env.PORT || 5000);
+
+    server.on('error', (err) => {
+        if (err.code === 'EADDRINUSE') {
+            console.error(`Port ${PORT} is already in use. Please stop the other process or change PORT.`);
+            process.exit(1);
+        } else {
+            console.error('Server error:', err);
+            process.exit(1);
+        }
+    });
+
+    server.listen(PORT, '0.0.0.0', () => {
+        console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+    });
+};
+
+const shutdown = (signal) => {
+    if (!server.listening) {
+        process.exit(0);
+        return;
+    }
+
+    console.log(`\nReceived ${signal}. Shutting down gracefully...`);
+    server.close(() => {
+        console.log('Server closed');
+        process.exit(0);
+    });
+
+    setTimeout(() => {
+        console.error('Forced shutdown after timeout');
+        process.exit(1);
+    }, 5000);
+};
+
+['SIGINT', 'SIGTERM', 'SIGUSR2'].forEach((signal) => {
+    process.on(signal, () => shutdown(signal));
 });
 
+startServer();
+
 // Handle unhandled promise rejections
-process.on('unhandledRejection', (err, promise) => {
+process.on('unhandledRejection', (err) => {
     console.log(`Error: ${err.message}`);
-    // Close server & exit process
     server.close(() => process.exit(1));
 });

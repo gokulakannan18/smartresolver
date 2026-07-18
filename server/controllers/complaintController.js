@@ -292,10 +292,12 @@ exports.updateStatus = async (req, res, next) => {
 
         // Resolution Logic
         if (status === 'Resolved') {
-            updateData.resolvedAt = Date.now();
+            const completedTimestamp = new Date();
+            updateData.resolvedAt = completedTimestamp;
+            updateData.completedAt = completedTimestamp; // exact completion timestamp
 
             // Calculate resolution time in hours
-            const diffInMs = updateData.resolvedAt - complaint.createdAt;
+            const diffInMs = completedTimestamp - complaint.createdAt;
             const diffInHours = diffInMs / (1000 * 60 * 60);
             updateData.resolutionTime = Math.round(diffInHours * 100) / 100;
 
